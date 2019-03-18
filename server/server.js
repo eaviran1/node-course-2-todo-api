@@ -26,6 +26,14 @@ app.post('/todos', (req, res) => {
 	});
 });
 
+app.get('/todos', (req, res) => {
+	Todo.find().then((todos)=>{
+		res.send({todos});
+	}, (e)=>{
+		res.status(400).send(e);
+	});
+});
+
 app.post('/users', (req, res)=> {
 	const body = _.pick(req.body, ['email', 'password']);
 	var  user = new User(body);
@@ -35,8 +43,8 @@ app.post('/users', (req, res)=> {
 	}).catch((e)=>{
 		res.status(400).send(e);
 	})
-
 })
+
 
 app.listen(port, () => {
 	console.log(`Started on port ${port}`);
